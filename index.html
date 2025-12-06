@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GatorAI | The AI Advantage for Warrington</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enables class-based dark mode
+            theme: {
+                extend: {
+                    colors: {
+                        gatorBlue: '#0021A5',
+                        gatorOrange: '#FA4616',
+                        gatorDark: '#001255', 
+                        midnight: '#020617',  
+                        paper: '#F9FAFB'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'glow': '0 0 40px -10px rgba(250, 70, 22, 0.3)',
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        
+        /* Animation Classes */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Ambient Background Logic */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Typing Effect Cursor */
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Card Spotlight Effect */
+        .spotlight-card:hover::before {
+            opacity: 1;
+        }
+        
+        .spotlight-card::before {
+            background: radial-gradient(
+                800px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(255, 255, 255, 0.06),
+                transparent 40%
+            );
+            border-radius: inherit;
+            content: "";
+            height: 100%;
+            left: 0px;
+            opacity: 0;
+            position: absolute;
+            top: 0px;
+            transition: opacity 0.5s;
+            width: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Scrollbar hide for clean UI mockup */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Chat Animations */
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #9CA3AF; /* Gray-400 */
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .progress-fill {
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-paper text-slate-900 dark:bg-midnight dark:text-gray-300 selection:bg-gatorOrange selection:text-white">
+
+    <!-- Ambient Backgrounds (Switch based on mode) -->
+    <!-- Dark Mode Ambient -->
+    <div class="ambient-bg hidden dark:block">
+        <div class="absolute top-0 left-0 w-full h-[800px] bg-gradient-radial from-blue-900/20 to-transparent opacity-40"></div>
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-radial from-gatorOrange/10 to-transparent opacity-30 blur-3xl"></div>
+    </div>
+    <!-- Light Mode Ambient -->
+    <div class="ambient-bg block dark:hidden">
+         <div class="absolute top-0 left-0 w-full h-[800px] bg-gradient-radial from-blue-100/40 to-transparent"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-midnight/80 backdrop-blur-xl border-b border-gray-200 dark:border-white/5 transition-all duration-500" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3">
+                    <!-- Minimalist Logo -->
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-gatorBlue to-gatorDark border border-white/10 flex items-center justify-center text-white font-serif font-bold italic shadow-lg">G</div>
+                    <span class="text-xl font-medium text-slate-900 dark:text-white tracking-tight transition-colors">Gator<span class="text-gray-400 dark:text-gray-500">AI</span></span>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <div class="hidden md:flex space-x-8 items-center">
+                        <a href="#features" class="text-sm font-medium text-gray-500 hover:text-gatorBlue dark:text-gray-400 dark:hover:text-white transition-colors duration-300">Capabilities</a>
+                        <a href="#faculty" class="text-sm font-medium text-gray-500 hover:text-gatorBlue dark:text-gray-400 dark:hover:text-white transition-colors duration-300">Integration</a>
+                        <a href="#mission" class="text-sm font-medium text-gray-500 hover:text-gatorBlue dark:text-gray-400 dark:hover:text-white transition-colors duration-300">Mission</a>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <!-- Theme Toggle Button -->
+                        <button id="theme-toggle" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10 transition-colors focus:outline-none">
+                            <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                            <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                        </button>
+
+                        <a href="#contact" class="hidden md:block text-sm bg-slate-900 text-white dark:bg-white dark:text-midnight px-6 py-2 rounded-full font-medium hover:opacity-90 transition shadow-lg">
+                            Request Access
+                        </a>
+                        
+                         <!-- Mobile menu button -->
+                        <button id="mobile-menu-btn" class="md:hidden text-slate-900 dark:text-white">
+                            <i data-lucide="menu" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-midnight border-t border-gray-100 dark:border-white/10 p-4 transition-colors duration-500">
+            <div class="flex flex-col space-y-4">
+                <a href="#features" class="text-slate-900 dark:text-gray-300 font-medium">Capabilities</a>
+                <a href="#faculty" class="text-slate-900 dark:text-gray-300 font-medium">Integration</a>
+                <a href="#mission" class="text-slate-900 dark:text-gray-300 font-medium">Mission</a>
+                <a href="#contact" class="text-gatorOrange font-bold">Request Access</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-slate-600 dark:text-gray-300 text-xs font-medium mb-8 fade-in-up backdrop-blur-sm transition-colors">
+                    <span class="flex h-1.5 w-1.5 rounded-full bg-gatorOrange mr-2 shadow-[0_0_10px_rgba(250,70,22,0.8)]"></span>
+                    Exclusively for UF Warrington College of Business
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-serif text-slate-900 dark:text-white tracking-tight mb-6 leading-[1.1] fade-in-up transition-colors" style="transition-delay: 100ms;">
+                    Business Intelligence, <br>
+                    <span class="italic text-gray-500 dark:text-gray-500">Reimagined.</span>
+                </h1>
+                
+                <p class="text-lg text-slate-600 dark:text-gray-400 mb-12 max-w-xl mx-auto font-light fade-in-up transition-colors" style="transition-delay: 200ms;">
+                    The curriculum-trained AI partner that aligns with faculty methods to accelerate analysis, pitch preparation, and research.
+                </p>
+
+                <!-- Interactive Typing Bar -->
+                <div class="max-w-2xl mx-auto mb-16 fade-in-up relative group" style="transition-delay: 300ms;">
+                    <!-- Glow effect behind bar -->
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-gatorBlue via-gatorOrange to-gatorBlue rounded-xl opacity-10 dark:opacity-20 group-hover:opacity-30 dark:group-hover:opacity-40 blur transition duration-500"></div>
+                    
+                    <div class="relative bg-white dark:bg-midnight border border-gray-200 dark:border-white/10 rounded-xl p-1 flex items-center shadow-xl transition-colors duration-500">
+                        <div class="flex-grow flex items-center px-4 py-3">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-gatorOrange mr-3"></i>
+                            <span class="text-slate-400 dark:text-gray-500 font-light text-sm md:text-base" id="typing-text"></span>
+                            <span class="cursor-blink w-0.5 h-5 bg-gatorOrange ml-1"></span>
+                        </div>
+                        <div class="hidden sm:flex items-center pr-1">
+                            <span class="text-xs text-gray-400 dark:text-gray-600 mr-3 px-2 py-1 bg-gray-100 dark:bg-white/5 rounded border border-gray-200 dark:border-white/5">⌘ K</span>
+                            <button class="bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 text-slate-600 dark:text-white rounded-lg p-2 transition">
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Hero Illustration: Collaborative Chat Interface -->
+            <div class="mt-8 relative mx-auto max-w-5xl fade-in-up" style="transition-delay: 500ms;">
+                <div class="rounded-xl border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-[#050b1d]/90 backdrop-blur-xl shadow-2xl overflow-hidden transition-colors duration-500">
+                    <!-- App Header -->
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-white/5 bg-gray-50/50 dark:bg-white/5">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-400/80"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-400/80"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-400/80"></div>
+                        </div>
+                        <div class="flex items-center gap-2 px-3 py-1 bg-white/50 dark:bg-black/20 rounded-md border border-black/5 dark:border-white/5">
+                            <i data-lucide="lock" class="w-3 h-3 text-gray-400"></i>
+                            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">warrington.ufl.edu/gator-ai</span>
+                        </div>
+                        <div class="w-10"></div> <!-- Spacer for balance -->
+                    </div>
+
+                    <div class="flex h-[400px] md:h-[500px]">
+                        <!-- Sidebar -->
+                        <div class="hidden md:flex flex-col w-16 border-r border-gray-200 dark:border-white/5 bg-gray-50/30 dark:bg-white/2 py-4 items-center gap-6">
+                             <div class="w-8 h-8 rounded-lg bg-gatorBlue flex items-center justify-center text-white font-bold text-xs">G</div>
+                             <div class="w-8 h-8 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-gray-400 transition cursor-pointer"><i data-lucide="message-square" class="w-4 h-4"></i></div>
+                             <div class="w-8 h-8 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-gray-400 transition cursor-pointer"><i data-lucide="folder" class="w-4 h-4"></i></div>
+                             <div class="w-8 h-8 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-gray-400 transition cursor-pointer"><i data-lucide="bar-chart-2" class="w-4 h-4"></i></div>
+                        </div>
+
+                        <!-- Main Chat Area -->
+                        <div class="flex-1 flex flex-col relative bg-white dark:bg-transparent">
+                            <!-- Background Grid -->
+                             <div class="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none" style="background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+                             <div class="flex-1 p-6 space-y-6 overflow-y-auto no-scrollbar relative z-10">
+                                 <!-- Initial AI Message -->
+                                 <div class="flex gap-4 max-w-2xl">
+                                     <div class="w-8 h-8 rounded-full bg-gradient-to-br from-gatorBlue to-gatorDark flex-shrink-0 flex items-center justify-center text-white text-xs">AI</div>
+                                     <div class="space-y-2">
+                                         <div class="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl rounded-tl-none text-sm text-gray-700 dark:text-gray-300 shadow-sm">
+                                             Hello Alex. I've reviewed your uploaded case study on <strong>Tesla's Supply Chain Strategy</strong>. How would you like to proceed?
+                                         </div>
+                                     </div>
+                                 </div>
+
+                                 <!-- User Message (Animated) -->
+                                 <div id="hero-user-msg" class="flex gap-4 max-w-2xl ml-auto justify-end opacity-0 translate-y-4 transition-all duration-700">
+                                     <div class="space-y-2">
+                                         <div class="bg-gatorBlue text-white p-4 rounded-2xl rounded-tr-none text-sm shadow-md">
+                                             Generate a SWOT analysis focusing on the lithium shortage risks.
+                                         </div>
+                                     </div>
+                                      <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-white/10 flex-shrink-0 flex items-center justify-center text-gray-500 text-xs">ME</div>
+                                 </div>
+
+                                 <!-- Typing Indicator (Hidden Default) -->
+                                 <div id="hero-typing" class="flex gap-4 max-w-2xl hidden">
+                                      <div class="w-8 h-8 rounded-full bg-gradient-to-br from-gatorBlue to-gatorDark flex-shrink-0 flex items-center justify-center text-white text-xs">AI</div>
+                                      <div class="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl rounded-tl-none flex items-center gap-1.5 shadow-sm h-[40px] w-[60px]">
+                                          <div class="typing-dot"></div>
+                                          <div class="typing-dot"></div>
+                                          <div class="typing-dot"></div>
+                                      </div>
+                                 </div>
+
+                                 <!-- AI Response with "UI Card" (Animated) -->
+                                 <div id="hero-ai-msg" class="flex gap-4 max-w-3xl opacity-0 translate-y-4 transition-all duration-700">
+                                     <div class="w-8 h-8 rounded-full bg-gradient-to-br from-gatorBlue to-gatorDark flex-shrink-0 flex items-center justify-center text-white text-xs">AI</div>
+                                     <div class="space-y-3 w-full">
+                                         <div class="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-5 rounded-2xl rounded-tl-none text-sm text-gray-700 dark:text-gray-300 shadow-sm">
+                                             <p class="mb-4">Here is the strategic breakdown based on the Q3 Financials:</p>
+                                             
+                                             <!-- Mock Data Card -->
+                                             <div class="bg-white dark:bg-black/20 rounded-xl border border-gray-200 dark:border-white/5 p-4">
+                                                 <div class="flex items-center justify-between mb-4">
+                                                     <h4 class="font-semibold text-gatorOrange flex items-center gap-2">
+                                                         <i data-lucide="activity" class="w-4 h-4"></i> Risk Assessment
+                                                     </h4>
+                                                     <span class="text-xs bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-2 py-0.5 rounded-full">High Priority</span>
+                                                 </div>
+                                                 <div class="grid grid-cols-2 gap-4 mb-4">
+                                                     <div class="bg-gray-50 dark:bg-white/5 p-3 rounded-lg">
+                                                         <div class="text-xs text-gray-500 mb-1">Supply Volatility</div>
+                                                         <div class="text-lg font-bold text-gray-800 dark:text-white">High</div>
+                                                         <div class="w-full h-1 bg-gray-200 rounded-full mt-2 overflow-hidden">
+                                                             <div id="progress-1" class="progress-fill h-full bg-red-500 rounded-full" style="width: 0%"></div>
+                                                         </div>
+                                                     </div>
+                                                     <div class="bg-gray-50 dark:bg-white/5 p-3 rounded-lg">
+                                                         <div class="text-xs text-gray-500 mb-1">Cost Impact</div>
+                                                         <div class="text-lg font-bold text-gray-800 dark:text-white">+12%</div>
+                                                          <div class="w-full h-1 bg-gray-200 rounded-full mt-2 overflow-hidden">
+                                                              <div id="progress-2" class="progress-fill h-full bg-yellow-500 rounded-full" style="width: 0%"></div>
+                                                          </div>
+                                                     </div>
+                                                 </div>
+                                                 <div class="text-xs text-gray-500 dark:text-gray-400 italic border-l-2 border-gatorOrange pl-3">
+                                                     "The reliance on spot-market lithium creates a 15% margin vulnerability in the upcoming quarter..."
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Gradient fade to blend with next section -->
+                <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-paper dark:from-midnight to-transparent pointer-events-none transition-colors duration-500 z-20"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners / Trust Bar -->
+    <div class="border-y border-gray-200 dark:border-white/5 bg-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center">
+            <p class="text-gray-400 dark:text-gray-600 text-xs font-semibold uppercase tracking-[0.2em] mb-8 transition-colors">Benchmarked Against</p>
+            <div class="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-30 dark:opacity-30 grayscale transition-all duration-500">
+                <span class="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-widest transition-colors">HARVARD</span>
+                <span class="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-widest transition-colors">WHARTON</span>
+                <span class="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-widest transition-colors">STANFORD</span>
+                <span class="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-widest transition-colors">MIT SLOAN</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 fade-in-up">
+                <div class="max-w-xl">
+                    <!-- Updated Badge Style -->
+                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-gatorOrange/10 border border-gatorOrange/20 text-gatorOrange text-xs font-bold tracking-wide uppercase mb-6">
+                        Core Capabilities
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 dark:text-white transition-colors tracking-tight">
+                        Context-aware intelligence <br> for the modern student.
+                    </h2>
+                </div>
+                <p class="text-slate-600 dark:text-gray-500 text-sm max-w-xs mt-6 md:mt-0 leading-relaxed transition-colors font-medium">
+                    Designed to augment your critical thinking, not replace it. Deeply integrated with the Warrington curriculum.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="cards-container">
+                <!-- Feature 1 -->
+                <div class="spotlight-card group relative p-8 rounded-2xl border border-gray-200 dark:border-white/5 bg-white dark:bg-white/[0.02] hover:shadow-xl dark:hover:bg-white/[0.04] transition duration-500 fade-in-up overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="w-10 h-10 bg-blue-50 dark:bg-gatorBlue/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition duration-500">
+                            <i data-lucide="briefcase" class="text-gatorBlue w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3 transition-colors">Case Analysis</h3>
+                        <p class="text-sm text-slate-600 dark:text-gray-500 leading-relaxed transition-colors">
+                            Upload complex PDFs. Get instant SWOT, financial ratio breakdowns, and strategic recommendations aligned with HBR frameworks.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="spotlight-card group relative p-8 rounded-2xl border border-gray-200 dark:border-white/5 bg-white dark:bg-white/[0.02] hover:shadow-xl dark:hover:bg-white/[0.04] transition duration-500 fade-in-up overflow-hidden" style="transition-delay: 100ms;">
+                    <div class="relative z-10">
+                        <div class="w-10 h-10 bg-orange-50 dark:bg-gatorOrange/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition duration-500">
+                            <i data-lucide="mic-2" class="text-gatorOrange w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3 transition-colors">Pitch Refinement</h3>
+                        <p class="text-sm text-slate-600 dark:text-gray-500 leading-relaxed transition-colors">
+                            GatorAI acts as a VC, critiquing your value prop, market sizing logic, and slide narrative before you present.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="spotlight-card group relative p-8 rounded-2xl border border-gray-200 dark:border-white/5 bg-white dark:bg-white/[0.02] hover:shadow-xl dark:hover:bg-white/[0.04] transition duration-500 fade-in-up overflow-hidden" style="transition-delay: 200ms;">
+                    <div class="relative z-10">
+                        <div class="w-10 h-10 bg-purple-50 dark:bg-purple-500/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition duration-500">
+                            <i data-lucide="search" class="text-purple-500 dark:text-purple-400 w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3 transition-colors">Research Acceleration</h3>
+                        <p class="text-sm text-slate-600 dark:text-gray-500 leading-relaxed transition-colors">
+                            Synthesize academic journals and market reports instantly. Build stronger arguments with data-backed insights.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Canvas Integration Section (Monolithic Flow) -->
+    <section class="py-32 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-20 items-center">
+                <div class="mb-12 lg:mb-0 fade-in-up">
+                    <!-- Updated Badge Style -->
+                     <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-gatorBlue dark:text-blue-400 text-xs font-bold tracking-wide uppercase mb-6">
+                        System Integration
+                    </div>
+                    
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 dark:text-white mb-6 transition-colors tracking-tight">
+                        Native <span class="text-gatorOrange">Canvas</span> Sync
+                    </h2>
+                    <p class="text-lg text-slate-600 dark:text-gray-400 mb-8 font-light transition-colors leading-relaxed">
+                        We don't just sit on top of your work; we flow with it. GatorAI ingests syllabi, deadlines, and professor-specific rubrics directly from Canvas.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 w-5 h-5 rounded-full border border-gatorBlue flex items-center justify-center flex-shrink-0">
+                                <div class="w-2.5 h-2.5 bg-gatorBlue rounded-full"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 dark:text-white text-sm transition-colors">Syllabus Ingestion</h4>
+                                <p class="text-slate-500 dark:text-gray-500 text-sm mt-1 transition-colors">Automatically understands reading lists and weekly objectives.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 w-5 h-5 rounded-full border border-gatorBlue flex items-center justify-center flex-shrink-0">
+                                <div class="w-2.5 h-2.5 bg-gatorBlue rounded-full"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 dark:text-white text-sm transition-colors">Faculty Alignment</h4>
+                                <p class="text-slate-500 dark:text-gray-500 text-sm mt-1 transition-colors">Trained on specific teaching methods of Warrington professors.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative fade-in-up" style="transition-delay: 200ms;">
+                    <!-- Elegant Card -->
+                    <div class="bg-white dark:bg-[#0A0F1E] rounded-xl p-8 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] border border-gray-200 dark:border-white/5 relative transition-colors duration-500">
+                         <!-- Abstract Connection Line -->
+                         <div class="absolute top-1/2 -left-12 w-12 h-[1px] bg-gradient-to-r from-transparent to-gatorOrange hidden lg:block opacity-50"></div>
+
+                        <div class="flex items-center justify-between border-b border-gray-100 dark:border-white/5 pb-6 mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-red-50 dark:bg-red-500/10 rounded flex items-center justify-center">
+                                    <i data-lucide="layout" class="text-red-500 w-4 h-4"></i>
+                                </div>
+                                <span class="font-semibold text-slate-900 dark:text-gray-200 text-sm transition-colors">Canvas LMS</span>
+                            </div>
+                            <i data-lucide="refresh-cw" class="text-gray-400 dark:text-gray-600 w-4 h-4"></i>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="p-4 bg-blue-50/50 dark:bg-blue-500/10 rounded-lg border border-blue-100/50 dark:border-blue-500/10 transition-colors">
+                                <div class="flex gap-4">
+                                    <div class="w-8 h-8 rounded-lg bg-gatorBlue flex-shrink-0 flex items-center justify-center shadow-lg shadow-blue-900/20">
+                                        <i data-lucide="bot" class="text-white w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gatorBlue dark:text-blue-400 font-bold mb-1 uppercase tracking-wide transition-colors">Insight</p>
+                                        <p class="text-sm text-slate-700 dark:text-gray-400 leading-relaxed transition-colors">
+                                            Based on <span class="font-semibold dark:text-gray-200">Prof. Smith's rubric</span>, your analysis lacks a quantitative sensitivity analysis. Shall we calculate NPV scenarios?
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission / Origin -->
+    <section id="mission" class="py-24 border-t border-gray-200 dark:border-white/5">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-up">
+            <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 dark:text-white mb-6 transition-colors tracking-tight">Built by Alumni. Powered by Pride.</h2>
+            <p class="text-lg text-slate-600 dark:text-gray-400 mb-12 font-light leading-relaxed transition-colors">
+                Top business schools are racing to adopt AI. We weren't willing to wait. 
+                GatorAI positions UF as a leader in AI-native business education.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center border-t border-gray-200 dark:border-white/5 pt-12">
+                <div class="p-4">
+                    <div class="text-4xl font-light text-slate-900 dark:text-white mb-2 font-serif transition-colors">Top 5</div>
+                    <div class="text-xs text-gatorOrange uppercase tracking-widest font-bold">Public Uni Goal</div>
+                </div>
+                <div class="p-4">
+                    <div class="text-4xl font-light text-slate-900 dark:text-white mb-2 font-serif transition-colors">100%</div>
+                    <div class="text-xs text-gatorOrange uppercase tracking-widest font-bold">Curriculum Aligned</div>
+                </div>
+                <div class="p-4">
+                    <div class="text-4xl font-light text-slate-900 dark:text-white mb-2 font-serif transition-colors">24/7</div>
+                    <div class="text-xs text-gatorOrange uppercase tracking-widest font-bold">Student Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Minimal CTA -->
+    <section id="contact" class="py-24 relative overflow-hidden">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gatorBlue opacity-10 dark:opacity-20 blur-[120px] rounded-full pointer-events-none transition-opacity"></div>
+            
+            <div class="relative z-10 fade-in-up">
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-slate-900 dark:text-white mb-8 transition-colors tracking-tight">Secure your spot.</h2>
+                
+                <form class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto mb-6">
+                    <input type="email" placeholder="ufl.edu email address" class="px-5 py-3 rounded-lg bg-white border border-gray-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-gatorOrange focus:ring-1 focus:ring-gatorOrange transition w-full shadow-sm dark:bg-white/5 dark:border-white/10 dark:text-white dark:placeholder-gray-500">
+                    <button type="submit" class="px-6 py-3 bg-slate-900 text-white dark:bg-white dark:text-midnight font-medium rounded-lg hover:opacity-90 transition shadow-lg whitespace-nowrap">
+                        Join Waitlist
+                    </button>
+                </form>
+                <p class="text-slate-500 dark:text-gray-500 text-xs transition-colors">Limited spots available for the Fall Beta cohort.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 dark:bg-black text-gray-500 py-12 border-t border-gray-200 dark:border-white/5 text-xs transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                     <div class="w-5 h-5 bg-gradient-to-br from-gatorBlue to-gatorDark rounded flex items-center justify-center text-white text-[10px] font-bold">G</div>
+                    <span class="text-base font-bold text-slate-900 dark:text-gray-300 transition-colors">GatorAI</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-slate-900 dark:hover:text-white transition">Privacy</a>
+                    <a href="#" class="hover:text-slate-900 dark:hover:text-white transition">Terms</a>
+                    <a href="#" class="hover:text-slate-900 dark:hover:text-white transition">Contact</a>
+                </div>
+            </div>
+            <div class="mt-8 text-center md:text-left text-gray-400 dark:text-gray-600 transition-colors">
+                &copy; 2024 GatorAI. Not officially affiliated with the University of Florida.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Theme Toggle Logic (Default Light)
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        // Use Light Mode by default unless "dark" is explicitly set in storage
+        if (localStorage.theme === 'dark') {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        });
+
+        // Hero Chat Animation Sequence
+        window.addEventListener('load', () => {
+            const userMsg = document.getElementById('hero-user-msg');
+            const aiMsg = document.getElementById('hero-ai-msg');
+            const typingInd = document.getElementById('hero-typing');
+            const p1 = document.getElementById('progress-1');
+            const p2 = document.getElementById('progress-2');
+
+            // 1. User asks question (1.5s delay)
+            setTimeout(() => {
+                userMsg.classList.remove('opacity-0', 'translate-y-4');
+            }, 1500);
+
+            // 2. Typing indicator appears (2.5s delay)
+            setTimeout(() => {
+                typingInd.classList.remove('hidden');
+            }, 2500);
+
+            // 3. AI Responds & Bars animate (4.5s delay)
+            setTimeout(() => {
+                typingInd.classList.add('hidden');
+                aiMsg.classList.remove('opacity-0', 'translate-y-4');
+                
+                // Animate bars shortly after container appears
+                setTimeout(() => {
+                    p1.style.width = '75%';
+                    p2.style.width = '50%';
+                }, 300);
+            }, 4500);
+        });
+
+        // Spotlight Effect Mouse Tracking
+        document.getElementById('cards-container').onmousemove = e => {
+            for(const card of document.getElementsByClassName("spotlight-card")) {
+                const rect = card.getBoundingClientRect(),
+                      x = e.clientX - rect.left,
+                      y = e.clientY - rect.top;
+
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            };
+        };
+
+        // Header Typing Effect Logic
+        const textToType = "Help me prepare a pitch for my startup class...";
+        const typingElement = document.getElementById('typing-text');
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < textToType.length) {
+                typingElement.innerHTML += textToType.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 50); // Typing speed
+            }
+        }
+        
+        // Start typing after delay
+        setTimeout(typeWriter, 1000);
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Intersection Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach((element) => {
+            observer.observe(element);
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                navbar.classList.add('shadow-sm');
+            } else {
+                navbar.classList.remove('shadow-sm');
+            }
+        });
+    </script>
+</body>
+</html>
