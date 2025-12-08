@@ -20,7 +20,7 @@ export function HeroSection() {
   const progress2Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const textToType = "Help me prepare a pitch for my startup class...";
+    const textToType = "A platform that connects local farmers directly with restaurants...";
     let charIndex = 0;
 
     const typeWriter = () => {
@@ -65,16 +65,16 @@ export function HeroSection() {
         <div className="text-center max-w-4xl mx-auto">
           <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-slate-600 dark:text-gray-300 text-xs font-medium mb-8 fade-in-up backdrop-blur-sm transition-colors">
             <span className="flex h-1.5 w-1.5 rounded-full bg-gatorOrange mr-2 shadow-[0_0_10px_rgba(250,70,22,0.8)]"></span>
-            Exclusively for UF Warrington College of Business
+            Exclusively for UF Business School Students
           </div>
 
           <h1 className="text-5xl md:text-7xl font-serif text-slate-900 dark:text-white tracking-tight mb-6 leading-[1.1] fade-in-up transition-colors" style={{ transitionDelay: "100ms" }}>
-            Business Intelligence, <br />
-            <span className="italic text-gray-500 dark:text-gray-500">Reimagined.</span>
+            Turn Classroom Ideas <br />
+            <span className="italic text-gray-500 dark:text-gray-500">Into Fundable Ventures.</span>
           </h1>
 
           <p className="text-lg text-slate-600 dark:text-gray-400 mb-12 max-w-xl mx-auto font-light fade-in-up transition-colors" style={{ transitionDelay: "200ms" }}>
-            The curriculum-trained AI partner that aligns with faculty methods to accelerate analysis, pitch preparation, and research.
+            Enter a rough startup concept—even a one-liner—and instantly generate professional business one-pagers, SWOT analysis, competitive landscapes, and investor-ready pitch decks.
           </p>
 
           {/* Interactive Typing Bar */}
@@ -156,8 +156,7 @@ export function HeroSection() {
                     </div>
                     <div className="space-y-2">
                       <div className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl rounded-tl-none text-sm text-gray-700 dark:text-gray-300 shadow-sm">
-                        Hello Alex. I&apos;ve reviewed your uploaded case study on{" "}
-                        <strong>Tesla&apos;s Supply Chain Strategy</strong>. How would you like to proceed?
+                        Hi! I&apos;ve analyzed your startup concept. I&apos;ve generated a business one-pager, SWOT analysis, and competitive landscape. Your viability score is <strong>78/100</strong>. Ready to refine?
                       </div>
                     </div>
                   </div>
@@ -170,7 +169,7 @@ export function HeroSection() {
                   >
                     <div className="space-y-2">
                       <div className="bg-gatorBlue text-white p-4 rounded-2xl rounded-tr-none text-sm shadow-md">
-                        Generate a SWOT analysis focusing on the lithium shortage risks.
+                        Generate my pitch deck for Gator Hatchery.
                       </div>
                     </div>
                     <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-white/10 flex-shrink-0 flex items-center justify-center text-gray-500 text-xs">
@@ -203,33 +202,33 @@ export function HeroSection() {
                     </div>
                     <div className="space-y-3 w-full">
                       <div className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-5 rounded-2xl rounded-tl-none text-sm text-gray-700 dark:text-gray-300 shadow-sm">
-                        <p className="mb-4">Here is the strategic breakdown based on the Q3 Financials:</p>
+                        <p className="mb-4">Your 10-slide pitch deck is ready! Here&apos;s your viability breakdown:</p>
 
                         {/* Mock Data Card */}
                         <div className="bg-white dark:bg-black/20 rounded-xl border border-gray-200 dark:border-white/5 p-4">
                           <div className="flex items-center justify-between mb-4">
                             <h4 className="font-semibold text-gatorOrange flex items-center gap-2">
-                              <Activity className="w-4 h-4" /> Risk Assessment
+                              <Activity className="w-4 h-4" /> Viability Score
                             </h4>
-                            <span className="text-xs bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-2 py-0.5 rounded-full">
-                              High Priority
+                            <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-0.5 rounded-full">
+                              Strong Potential
                             </span>
                           </div>
                           <div className="grid grid-cols-2 gap-4 mb-4">
                             <div className="bg-gray-50 dark:bg-white/5 p-3 rounded-lg">
-                              <div className="text-xs text-gray-500 mb-1">Supply Volatility</div>
-                              <div className="text-lg font-bold text-gray-800 dark:text-white">High</div>
+                              <div className="text-xs text-gray-500 mb-1">Market Opportunity</div>
+                              <div className="text-lg font-bold text-gray-800 dark:text-white">78%</div>
                               <div className="w-full h-1 bg-gray-200 rounded-full mt-2 overflow-hidden">
                                 <div
                                   ref={progress1Ref}
-                                  className="progress-fill h-full bg-red-500 rounded-full"
+                                  className="progress-fill h-full bg-green-500 rounded-full"
                                   style={{ width: "0%" }}
                                 ></div>
                               </div>
                             </div>
                             <div className="bg-gray-50 dark:bg-white/5 p-3 rounded-lg">
-                              <div className="text-xs text-gray-500 mb-1">Cost Impact</div>
-                              <div className="text-lg font-bold text-gray-800 dark:text-white">+12%</div>
+                              <div className="text-xs text-gray-500 mb-1">Competitive Edge</div>
+                              <div className="text-lg font-bold text-gray-800 dark:text-white">65%</div>
                               <div className="w-full h-1 bg-gray-200 rounded-full mt-2 overflow-hidden">
                                 <div
                                   ref={progress2Ref}
@@ -240,7 +239,7 @@ export function HeroSection() {
                             </div>
                           </div>
                           <div className="text-xs text-gray-500 dark:text-gray-400 italic border-l-2 border-gatorOrange pl-3">
-                            &quot;The reliance on spot-market lithium creates a 15% margin vulnerability in the upcoming quarter...&quot;
+                            &quot;Your direct-to-restaurant model addresses a $2.3B market gap. Consider emphasizing your unique farmer verification system.&quot;
                           </div>
                         </div>
                       </div>
@@ -257,4 +256,5 @@ export function HeroSection() {
     </section>
   );
 }
+
 

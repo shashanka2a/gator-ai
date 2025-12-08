@@ -46,20 +46,20 @@ export default function Home() {
         <div className="border-y border-gray-200 dark:border-white/5 bg-transparent">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center">
             <p className="text-gray-400 dark:text-gray-600 text-xs font-semibold uppercase tracking-[0.2em] mb-8 transition-colors">
-              Benchmarked Against
+              Trusted By UF Entrepreneurs
             </p>
-            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-30 dark:opacity-30 grayscale transition-all duration-500">
+            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-60 dark:opacity-60 transition-all duration-500">
               <span className="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-widest transition-colors">
-                HARVARD
+                GATOR HATCHERY
               </span>
               <span className="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-widest transition-colors">
-                WHARTON
+                UF ENTREPRENEURSHIP CLUB
               </span>
               <span className="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-widest transition-colors">
-                STANFORD
+                FLORIDA GATOR100
               </span>
               <span className="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-widest transition-colors">
-                MIT SLOAN
+                WARRINGTON COLLEGE
               </span>
             </div>
           </div>
@@ -72,19 +72,27 @@ export default function Home() {
         <section id="mission" className="py-24 border-t border-gray-200 dark:border-white/5">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-up">
             <h2 className="text-3xl md:text-5xl font-serif font-bold text-slate-900 dark:text-white mb-6 transition-colors tracking-tight">
-              Built by Alumni. Powered by Pride.
+              Turn Gator Innovation Into <br /> Investor-Ready Pitches
             </h2>
             <p className="text-lg text-slate-600 dark:text-gray-400 mb-12 font-light leading-relaxed transition-colors">
-              Top business schools are racing to adopt AI. We weren&apos;t willing to wait. GatorAI positions UF as a leader in AI-native business education.
+              GatorAI compresses weeks of preparation into hours. From a rough one-liner to a polished pitch deck and landing page—everything you need to compete, impress professors, and attract investors.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center border-t border-gray-200 dark:border-white/5 pt-12">
               <div className="p-4">
                 <div className="text-4xl font-light text-slate-900 dark:text-white mb-2 font-serif transition-colors">
-                  Top 5
+                  Hours
                 </div>
                 <div className="text-xs text-gatorOrange uppercase tracking-widest font-bold">
-                  Public Uni Goal
+                  Not Weeks
+                </div>
+              </div>
+              <div className="p-4">
+                <div className="text-4xl font-light text-slate-900 dark:text-white mb-2 font-serif transition-colors">
+                  10 Slides
+                </div>
+                <div className="text-xs text-gatorOrange uppercase tracking-widest font-bold">
+                  Pitch Deck Ready
                 </div>
               </div>
               <div className="p-4">
@@ -92,15 +100,7 @@ export default function Home() {
                   100%
                 </div>
                 <div className="text-xs text-gatorOrange uppercase tracking-widest font-bold">
-                  Curriculum Aligned
-                </div>
-              </div>
-              <div className="p-4">
-                <div className="text-4xl font-light text-slate-900 dark:text-white mb-2 font-serif transition-colors">
-                  24/7
-                </div>
-                <div className="text-xs text-gatorOrange uppercase tracking-widest font-bold">
-                  Student Support
+                  UF Student Focused
                 </div>
               </div>
             </div>
@@ -147,4 +147,5 @@ export default function Home() {
     </>
   );
 }
+
 

@@ -17,9 +17,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "GatorAI | The AI Advantage for Warrington",
-  description: "The curriculum-trained AI partner that aligns with faculty methods to accelerate analysis, pitch preparation, and research. Exclusively for UF Warrington College of Business.",
-  keywords: ["GatorAI", "AI", "Warrington", "University of Florida", "Business Intelligence", "Canvas", "Education", "AI Assistant"],
+  title: "GatorAI | Turn Your Startup Idea Into Investor-Ready Pitches",
+  description: "AI-powered startup validation and pitch platform for UF business students. Generate business one-pagers, SWOT analysis, competitive landscapes, pitch decks, and landing pages. Perfect for Gator Hatchery, UF Entrepreneurship Club, and Florida Gator100.",
+  keywords: ["GatorAI", "Startup Validation", "Pitch Deck", "UF Entrepreneurship", "Gator Hatchery", "University of Florida", "Business Pitch", "Startup Platform", "Warrington", "Florida Gator100", "UF Entrepreneurship Club"],
   authors: [{ name: "GatorAI" }],
   creator: "GatorAI",
   publisher: "GatorAI",
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "GatorAI | The AI Advantage for Warrington",
-    description: "The curriculum-trained AI partner that aligns with faculty methods to accelerate analysis, pitch preparation, and research.",
+    title: "GatorAI | Turn Your Startup Idea Into Investor-Ready Pitches",
+    description: "AI-powered startup validation and pitch platform for UF business students. Generate business one-pagers, SWOT analysis, competitive landscapes, pitch decks, and landing pages.",
     url: "https://warrington.ufl.edu/gator-ai",
     siteName: "GatorAI",
     locale: "en_US",
@@ -42,8 +42,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GatorAI | The AI Advantage for Warrington",
-    description: "The curriculum-trained AI partner that aligns with faculty methods to accelerate analysis, pitch preparation, and research.",
+    title: "GatorAI | Turn Your Startup Idea Into Investor-Ready Pitches",
+    description: "AI-powered startup validation and pitch platform for UF business students. Generate business one-pagers, SWOT analysis, competitive landscapes, pitch decks, and landing pages.",
   },
   robots: {
     index: true,
