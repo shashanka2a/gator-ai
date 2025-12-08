@@ -1,28 +1,41 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { FileText, TrendingUp, Palette, Presentation, Globe, Sparkles } from "lucide-react";
+import { FileText, TrendingUp, Palette, Presentation, Globe } from "lucide-react";
 
 export function FeaturesSection() {
-  const cardsContainerRef = useRef<HTMLDivElement>(null);
+  // Fixed: Create separate refs for each grid to enable spotlight effect on both
+  const cardsContainerRef1 = useRef<HTMLDivElement>(null);
+  const cardsContainerRef2 = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const container = cardsContainerRef.current;
-    if (!container) return;
+    // Helper function to set up mouse tracking for a container
+    const setupMouseTracking = (container: HTMLDivElement | null) => {
+      if (!container) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const cards = container.getElementsByClassName("spotlight-card");
-      for (const card of Array.from(cards)) {
-        const rect = (card as HTMLElement).getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        (card as HTMLElement).style.setProperty("--mouse-x", `${x}px`);
-        (card as HTMLElement).style.setProperty("--mouse-y", `${y}px`);
-      }
+      const handleMouseMove = (e: MouseEvent) => {
+        const cards = container.getElementsByClassName("spotlight-card");
+        for (const card of Array.from(cards)) {
+          const rect = (card as HTMLElement).getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          (card as HTMLElement).style.setProperty("--mouse-x", `${x}px`);
+          (card as HTMLElement).style.setProperty("--mouse-y", `${y}px`);
+        }
+      };
+
+      container.addEventListener("mousemove", handleMouseMove);
+      return () => container.removeEventListener("mousemove", handleMouseMove);
     };
 
-    container.addEventListener("mousemove", handleMouseMove);
-    return () => container.removeEventListener("mousemove", handleMouseMove);
+    // Set up mouse tracking for both grids
+    const cleanup1 = setupMouseTracking(cardsContainerRef1.current);
+    const cleanup2 = setupMouseTracking(cardsContainerRef2.current);
+
+    return () => {
+      if (cleanup1) cleanup1();
+      if (cleanup2) cleanup2();
+    };
   }, []);
 
   return (
@@ -38,11 +51,12 @@ export function FeaturesSection() {
             </h2>
           </div>
           <p className="text-slate-600 dark:text-gray-500 text-sm max-w-xs mt-6 md:mt-0 leading-relaxed transition-colors font-medium">
-            Compress weeks of preparation into hours. Perfect for Gator Hatchery, UF Entrepreneurship Club, and Florida Gator100.
+            Compress weeks of preparation into hours. Perfect for Gator Hatchery, UF Entrepreneurship Club, and Big Idea Competition.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6" ref={cardsContainerRef}>
+        {/* First grid - 3 columns */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6" ref={cardsContainerRef1}>
           {/* Feature 1 */}
           <div className="spotlight-card group relative p-8 rounded-2xl border border-gray-200 dark:border-white/5 bg-white dark:bg-white/[0.02] hover:shadow-xl dark:hover:bg-white/[0.04] transition duration-500 fade-in-up overflow-hidden">
             <div className="relative z-10">
@@ -95,7 +109,8 @@ export function FeaturesSection() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6" ref={cardsContainerRef}>
+        {/* Second grid - 2 columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6" ref={cardsContainerRef2}>
           {/* Feature 4 */}
           <div
             className="spotlight-card group relative p-8 rounded-2xl border border-gray-200 dark:border-white/5 bg-white dark:bg-white/[0.02] hover:shadow-xl dark:hover:bg-white/[0.04] transition duration-500 fade-in-up overflow-hidden"
@@ -136,5 +151,3 @@ export function FeaturesSection() {
     </section>
   );
 }
-
-

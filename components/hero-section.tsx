@@ -47,13 +47,14 @@ export function HeroSection() {
     setTimeout(() => {
       setTypingVisible(false);
       setAiMsgVisible(true);
-      // Animate progress bars
+      // Animate bars shortly after container appears
+      // Fixed: Changed from 75% and 50% to 78% and 65% to match displayed text
       setTimeout(() => {
         if (progress1Ref.current) {
-          progress1Ref.current.style.width = "75%";
+          progress1Ref.current.style.width = "78%";
         }
         if (progress2Ref.current) {
-          progress2Ref.current.style.width = "50%";
+          progress2Ref.current.style.width = "65%";
         }
       }, 300);
     }, 4500);
@@ -74,7 +75,7 @@ export function HeroSection() {
           </h1>
 
           <p className="text-lg text-slate-600 dark:text-gray-400 mb-12 max-w-xl mx-auto font-light fade-in-up transition-colors" style={{ transitionDelay: "200ms" }}>
-            Enter a rough startup concept—even a one-liner—and instantly generate professional business one-pagers, SWOT analysis, competitive landscapes, and investor-ready pitch decks.
+            Enter any startup concept and instantly generate business one-pagers, SWOT analysis, competitive landscapes, and investor-ready pitch decks.
           </p>
 
           {/* Interactive Typing Bar */}
@@ -256,5 +257,3 @@ export function HeroSection() {
     </section>
   );
 }
-
-

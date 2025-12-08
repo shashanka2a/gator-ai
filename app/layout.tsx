@@ -18,8 +18,8 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "GatorAI | Turn Your Startup Idea Into Investor-Ready Pitches",
-  description: "AI-powered startup validation and pitch platform for UF business students. Generate business one-pagers, SWOT analysis, competitive landscapes, pitch decks, and landing pages. Perfect for Gator Hatchery, UF Entrepreneurship Club, and Florida Gator100.",
-  keywords: ["GatorAI", "Startup Validation", "Pitch Deck", "UF Entrepreneurship", "Gator Hatchery", "University of Florida", "Business Pitch", "Startup Platform", "Warrington", "Florida Gator100", "UF Entrepreneurship Club"],
+  description: "AI-powered startup validation and pitch platform for UF business students. Generate business one-pagers, SWOT analysis, competitive landscapes, pitch decks, and landing pages. Perfect for Gator Hatchery, UF Entrepreneurship Club, and Big Idea Competition.",
+  keywords: ["GatorAI", "Startup Validation", "Pitch Deck", "UF Entrepreneurship", "Gator Hatchery", "University of Florida", "Business Pitch", "Startup Platform", "Warrington", "Big Idea Competition", "UF Entrepreneurship Club"],
   authors: [{ name: "GatorAI" }],
   creator: "GatorAI",
   publisher: "GatorAI",

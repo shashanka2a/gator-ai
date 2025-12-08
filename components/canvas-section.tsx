@@ -29,7 +29,7 @@ export function CanvasSection() {
                     Gator Hatchery
                   </h4>
                   <p className="text-slate-500 dark:text-gray-500 text-sm mt-1 transition-colors">
-                    Generate investor-ready pitch decks and business plans for UF&apos;s premier startup incubator.
+                    Investor-ready pitch decks and business plans for UF&apos;s premier startup incubator.
                   </p>
                 </div>
               </div>
@@ -39,7 +39,7 @@ export function CanvasSection() {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 dark:text-white text-sm transition-colors">
-                    Florida Gator100
+                    Big Idea Competition
                   </h4>
                   <p className="text-slate-500 dark:text-gray-500 text-sm mt-1 transition-colors">
                     Stand out with professional validation materials and compelling pitch narratives.

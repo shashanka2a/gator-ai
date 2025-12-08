@@ -56,9 +56,6 @@ export default function Home() {
                 UF ENTREPRENEURSHIP CLUB
               </span>
               <span className="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-widest transition-colors">
-                FLORIDA GATOR100
-              </span>
-              <span className="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-widest transition-colors">
                 WARRINGTON COLLEGE
               </span>
             </div>
@@ -75,7 +72,7 @@ export default function Home() {
               Turn Gator Innovation Into <br /> Investor-Ready Pitches
             </h2>
             <p className="text-lg text-slate-600 dark:text-gray-400 mb-12 font-light leading-relaxed transition-colors">
-              GatorAI compresses weeks of preparation into hours. From a rough one-liner to a polished pitch deck and landing page—everything you need to compete, impress professors, and attract investors.
+              GatorAI compresses weeks of preparation into hours. From a rough one-liner to a polished pitch deck and landing page, everything you need to compete, impress professors, and attract investors.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center border-t border-gray-200 dark:border-white/5 pt-12">
